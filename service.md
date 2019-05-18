@@ -20,7 +20,7 @@ cd /lib/systemd/system/
 sudo nano hello.service
 ```
 
-The service definition must be on the /lib/systemd/system folder. Our service is going to be called "hello.service":
+The service definition must be on the /etc/systemd/system folder. Our service is going to be called "hello.service":
 Code: Select all
 ```bash
 [Unit]
@@ -41,21 +41,14 @@ Here we are creating a very simple service that runs our hello_world script and 
 Now that we have our service we need to activate it:
 Code: Select all
 ```bash
-sudo chmod 644 /lib/systemd/system/hello.service
-chmod +x /home/pi/hello_world.py
-sudo systemctl daemon-reload
-sudo systemctl enable hello.service
-sudo systemctl start hello.service
-
-
-sudo chmod 644 /lib/systemd/system/hello.service
+sudo chmod 644 /etc/systemd/system/hello.service
 chmod +x /home/pi/hello_world.py
 sudo systemctl daemon-reload
 sudo systemctl enable hello.service
 sudo systemctl start hello.service
 ```
 
-For every change that we do on the /lib/systemd/system folder we need to execute a daemon-reload (third line of previous code). If we want to check the status of our service, you can execute:
+For every change that we do on the /etc/systemd/system folder we need to execute a daemon-reload (third line of previous code). If we want to check the status of our service, you can execute:
 Code: Select all
 ```bash
 sudo systemctl status hello.service

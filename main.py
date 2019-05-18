@@ -48,7 +48,6 @@ def connect_mqtt():
     logger_mqtt.info(f'Connecting mqtt: {params["mqtt"]}')
     client.connect(**params['mqtt'])
     client.subscribe(params['topic'])
-    client.loop_forever()
 
 
 # communication with AC
@@ -65,4 +64,7 @@ def __main__():
     token = request_ac(url_login, headers, data_login)['LoginData']['ContextKey']
     headers.update(**{TOKEN: token})
     # connect mqtt
+    connect_mqtt()
+    client.loop_forever()
 
+__main__()
