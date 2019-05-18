@@ -1,0 +1,5 @@
+aiohttp
+ipython
+pyyaml
+requests
+paho-mqtt

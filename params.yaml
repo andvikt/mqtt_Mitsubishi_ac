@@ -1,0 +1,62 @@
+mqtt:
+  host:
+  port: 1883
+  keepalive: 60
+
+topic:
+
+data_login:
+  AppVersion: 1.17.6.3
+  CaptchaResponse: null
+  Email: bahdaji@gmail.com
+  Language: 16
+  Password: 123qweASD
+  Persist: true
+
+url_login: https://app.melcloud.com/Mitsubishi.Wifi.Client/Login/ClientLogin
+url_ac: https://app.melcloud.com/Mitsubishi.Wifi.Client/Device/SetAta
+
+head:
+  Accept: application/json, text/javascript, */*; q=0.01
+  Accept-Encoding: gzip, deflate, br
+  Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+  Connection: keep-alive
+  Content-Length: 129
+  Content-Type: application/json; charset=UTF-8
+  Cookie: policyaccepted=true
+  Host: app.melcloud.com
+  Origin: https://app.melcloud.com
+  Referer: https://app.melcloud.com/
+  User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36
+  X-Requested-With: XMLHttpRequest
+
+data_ac:
+  DefaultCoolingSetTemperature: null
+  DefaultHeatingSetTemperature: null
+  DeviceID: 141309
+  DeviceType: 0
+  EffectiveFlags: 2
+  ErrorCode: 8000
+  ErrorMessage: null
+  HasPendingCommand: false
+  HideDryModeControl: false
+  HideVaneControls: false
+  InStandbyMode: false
+  LastCommunication: "2019-05-17T19:51:56.593"
+  LocalIPAddress: null
+  Name: null
+  NextCommunication: "2019-05-17T19:52:56.593"
+  NumberOfFanSpeeds: 3
+  Offline: false
+  OperationMode: 3
+  Power: true
+  RoomTemperature: 24.5
+  RoomTemperatureLabel: 0
+  Scene: null
+  SceneOwner: null
+  SetFanSpeed: 1
+  SetTemperature: 25
+  TemperatureIncrementOverride: 0
+  VaneHorizontal: 0
+  VaneVertical: 0
+  WeatherObservations: null
