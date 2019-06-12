@@ -1,53 +1,28 @@
 #%%
 import requests
 import yaml
-import json
-from paho.mqtt import client as mqtt
 from copy import copy
 from logging import getLogger, config as logconfig
+import click
 
 # logger config
-logconfig.fileConfig('logger.conf')
+#logconfig.fileConfig('logger.conf')
 logger_ac = getLogger('ac_control')
 logger_mqtt = getLogger('MQTT')
 
 # load params
-with open('params.yaml', 'r') as f:
+print(__file__)
+with open(f'/daikin_ac/params.yaml', 'r') as f:
     params = yaml.load(f, yaml.FullLoader)
 
 # params
 url_login = params['url_login']
 url_ac = params['url_ac']
+url_ac_status = params['url_ac_status']
 headers = {x: str(y) for x, y in params['head'].items()}
 data_login = params['data_login']
 data_ac = params['data_ac']
 TOKEN = 'X-MitsContextKey'
-
-
-# MQTT
-def on_connect_mqtt(client, userdata, flags, rc):
-    logger_mqtt.info(f'Connected to mqtt with result code {rc}')
-
-
-def on_message_mqtt(client, userdata, msg):
-    logger_mqtt.info(f'New data in topic: {msg.topic}, payload: {msg.payload}')
-    try:
-        data: dict = copy(data_ac)
-        data.update(**json.loads(msg.payload))
-        request_ac(url_ac, headers, data)
-    except Exception as err:
-        logger_mqtt.error(str(err))
-
-
-client = mqtt.Client()
-client.on_connect = on_connect_mqtt
-client.on_message = on_message_mqtt
-
-
-def connect_mqtt():
-    logger_mqtt.info(f'Connecting mqtt: {params["mqtt"]}')
-    client.connect(**params['mqtt'])
-    client.subscribe(params['topic'])
 
 
 # communication with AC
@@ -59,12 +34,67 @@ def request_ac(url, headers, data):
         return req.json()
 
 
-def __main__():
-    # login to AC
-    token = request_ac(url_login, headers, data_login)['LoginData']['ContextKey']
-    headers.update(**{TOKEN: token})
-    # connect mqtt
-    connect_mqtt()
-    client.loop_forever()
+@click.group()
+def cli():
+    pass
 
-__main__()
+
+FLAGS = {
+    'Power': 1
+    , 'OperationMode': 2
+    , 'SetTemperature': 4
+    , 'SetFanSpeed': 8
+}
+
+
+def calc_flags(kwargs: dict):
+    ret = 0
+    for n, x in kwargs.items():
+        if x is not None and n in FLAGS:
+            ret = ret | FLAGS[n]
+    return ret
+
+
+@cli.command()
+@click.option('--email')
+@click.option('--pwd')
+@click.option('--DeviceID', help='DeviceID')
+@click.option('--OperationMode', default=None, help='OperationMode')
+@click.option('--Power', default=None, help='Power')
+@click.option('--SetFanSpeed', default=None, help='SetFanSpeed')
+@click.option('--SetTemperature', default=None, help='SetTemperature')
+def send_command(email, pwd, *args, **kwargs):
+    # login to AC
+    login = copy(data_login)
+    login.update(
+        Email='email'
+        , Password='pwd'
+    )
+    token = request_ac(url_login, headers, login).get('LoginData', {}).get('ContextKey')
+    if token:
+        headers.update(**{TOKEN: token})
+        # send msg
+        data: dict = copy(data_ac)
+        kwargs.update(EffectiveFlags=calc_flags(kwargs))
+        data.update(**kwargs)
+        print(request_ac(url_ac, headers, kwargs))
+    else:
+        raise RuntimeError('Did not get token')
+
+
+@cli.command()
+@click.option('--email')
+@click.option('--pwd')
+def get_status(email, pwd, **kwargs):
+    # login to AC
+    login = copy(data_login)
+    login.update(
+        Email='email'
+        , Password='pwd'
+    )
+    token = request_ac(url_login, headers, login).get('LoginData', {}).get('ContextKey')
+    if token:
+        headers.update(**{TOKEN: token})
+        print(request_ac(url_ac_status, headers, {}))
+    else:
+        raise RuntimeError('Did not get token')

@@ -8,13 +8,12 @@ topic:
 data_login:
   AppVersion: 1.17.6.3
   CaptchaResponse: null
-  Email: bahdaji@gmail.com
   Language: 16
-  Password: 123qweASD
   Persist: true
 
 url_login: https://app.melcloud.com/Mitsubishi.Wifi.Client/Login/ClientLogin
 url_ac: https://app.melcloud.com/Mitsubishi.Wifi.Client/Device/SetAta
+url_ac_status: https://app.melcloud.com/Mitsubishi.Wifi.Client/Device/SetAta
 
 head:
   Accept: application/json, text/javascript, */*; q=0.01
