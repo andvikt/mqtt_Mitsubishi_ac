@@ -1,9 +1,14 @@
-mqtt:
-  host:
-  port: 1883
-  keepalive: 60
-
-topic:
+head:
+  Accept: application/json, text/javascript, */*; q=0.01
+  Accept-Encoding: gzip, deflate, br
+  Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+  Connection: keep-alive
+  Cookie: policyaccepted=true
+  Host: app.melcloud.com
+  Origin: https://app.melcloud.com
+  Referer: https://app.melcloud.com/
+  User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36
+  X-Requested-With: XMLHttpRequest
 
 data_login:
   AppVersion: 1.17.6.3
@@ -13,21 +18,7 @@ data_login:
 
 url_login: https://app.melcloud.com/Mitsubishi.Wifi.Client/Login/ClientLogin
 url_ac: https://app.melcloud.com/Mitsubishi.Wifi.Client/Device/SetAta
-url_ac_status: https://app.melcloud.com/Mitsubishi.Wifi.Client/Device/SetAta
-
-head:
-  Accept: application/json, text/javascript, */*; q=0.01
-  Accept-Encoding: gzip, deflate, br
-  Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
-  Connection: keep-alive
-  Content-Length: 129
-  Content-Type: application/json; charset=UTF-8
-  Cookie: policyaccepted=true
-  Host: app.melcloud.com
-  Origin: https://app.melcloud.com
-  Referer: https://app.melcloud.com/
-  User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36
-  X-Requested-With: XMLHttpRequest
+url_ac_status: https://app.melcloud.com/Mitsubishi.Wifi.Client/Device/Get?id={devid}&buildingID={buildingID}
 
 data_ac:
   DefaultCoolingSetTemperature: null

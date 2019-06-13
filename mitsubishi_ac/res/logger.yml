@@ -1,0 +1,17 @@
+version: 1
+formatters:
+  myformatter:
+    class: logging.Formatter
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: CRITICAL
+  file:
+    class: logging.FileHandler
+    filename: log.log
+    mode: w
+    formatter: myformatter
+loggers:
+  ac_control:
+    handlers: [console, file]

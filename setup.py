@@ -10,5 +10,6 @@ setup(
     author='andrewgermanovich',
     author_email='',
     description='',
-    install_requires=['pyyaml', 'paho-mqtt', 'click']
+    install_requires=['pyyaml', 'hbmqtt', 'click', 'aiohttp', 'attrs'],
+    tests_require=['pytest-asyncio']
 )
